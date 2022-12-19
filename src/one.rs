@@ -21,7 +21,7 @@ pub fn solve_first(input: &str) -> Result<usize> {
     for line in input.lines() {
         match line.parse::<usize>() {
             Ok(num) => {
-                sum = sum + num;
+                sum += num;
             },
             Err(_) => {
                 max = if max > sum { max } else { sum };
@@ -38,7 +38,7 @@ pub fn solve_second(input: &str) -> Result<usize> {
     for line in format!("{}{}", input, "\n\n").lines() {
         match line.parse::<usize>() {
             Ok(num) => {
-                sum = sum + num;
+                sum += num;
             },
             Err(_) => {
                 if nums[0] < sum {

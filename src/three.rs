@@ -22,13 +22,13 @@ pub fn solve_first(input: &str) -> usize {
         set_two.extend(snd.chars());
 
         let mut inter = set_one.intersection(&set_two);
-        let c = *inter.nth(0).unwrap();
+        let c = *inter.next().unwrap();
 
-        if 'a' <= c && c <= 'z' {
+        if ('a'..='z').contains(&c) {
             sum += c as usize - 'a' as usize + 1;
         }
 
-        if 'A' <= c && c <= 'Z' {
+        if ('A'..='Z').contains(&c) {
             sum += c as usize - 'A' as usize + 27;
         }
     }
@@ -57,13 +57,13 @@ pub fn solve_second(input: &str) -> usize {
         inter_set.extend(inter);
 
         let mut inter = inter_set.intersection(&set_three);
-        let c = *inter.nth(0).unwrap();
+        let c = *inter.next().unwrap();
 
-        if 'a' <= c && c <= 'z' {
+        if ('a'..='z').contains(&c) {
             sum += c as usize - 'a' as usize + 1;
         }
 
-        if 'A' <= c && c <= 'Z' {
+        if ('A'..='Z').contains(&c) {
             sum += c as usize - 'A' as usize + 27;
         }
     }

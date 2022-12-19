@@ -9,14 +9,14 @@ pub fn solve_first(input: &str) -> usize {
     let mut sum = 0;
 
     for line in input.lines() {
-        let mut ranges = line.split(",");
+        let mut ranges = line.split(',');
         let fst_range = ranges.next().unwrap();
-        let mut fst_nums = fst_range.split("-");
+        let mut fst_nums = fst_range.split('-');
         let min1 = fst_nums.next().unwrap().parse::<usize>().unwrap();
         let max1 = fst_nums.next().unwrap().parse::<usize>().unwrap();
 
         let snd_range = ranges.next().unwrap();
-        let mut snd_nums = snd_range.split("-");
+        let mut snd_nums = snd_range.split('-');
         let min2 = snd_nums.next().unwrap().parse::<usize>().unwrap();
         let max2 = snd_nums.next().unwrap().parse::<usize>().unwrap();
         if (min1 <= min2 && max2 <= max1) || (min2 <= min1 && max1 <= max2) {
@@ -31,14 +31,14 @@ pub fn solve_second(input: &str) -> usize {
     let mut sum = 0;
 
     for line in input.lines() {
-        let mut ranges = line.split(",");
+        let mut ranges = line.split(',');
         let fst_range = ranges.next().unwrap();
-        let mut fst_nums = fst_range.split("-");
+        let mut fst_nums = fst_range.split('-');
         let min1 = fst_nums.next().unwrap().parse::<usize>().unwrap();
         let max1 = fst_nums.next().unwrap().parse::<usize>().unwrap();
 
         let snd_range = ranges.next().unwrap();
-        let mut snd_nums = snd_range.split("-");
+        let mut snd_nums = snd_range.split('-');
         let min2 = snd_nums.next().unwrap().parse::<usize>().unwrap();
         let max2 = snd_nums.next().unwrap().parse::<usize>().unwrap();
         if (min1 <= min2 && max2 <= max1)

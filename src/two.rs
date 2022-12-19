@@ -50,7 +50,7 @@ pub fn solve_first(input: &str) -> usize {
     for line in input.lines() {
         let mut cs = line.chars();
         println!("{:?}", cs);
-        let fst = cs.nth(0).unwrap();
+        let fst = cs.next().unwrap();
         let snd = cs.nth(1).unwrap();
         sum += play(fst, snd).points() + get_points(snd)
     }
@@ -62,7 +62,7 @@ pub fn solve_second(input: &str) -> usize {
     for line in input.lines() {
         let mut cs = line.chars();
         println!("{:?}", cs);
-        let fst = cs.nth(0).unwrap();
+        let fst = cs.next().unwrap();
         let snd = cs.nth(1).unwrap();
         let res = match snd {
             'X' => Game::Lose,
