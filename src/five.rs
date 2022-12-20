@@ -1,4 +1,5 @@
 use regex::Regex;
+use itertools::Itertools;
 
 pub const SAMPLE: &str = "    [D]    
 [N] [C]    
@@ -32,6 +33,15 @@ pub fn parse_input(input: &str) -> (Vec<Vec<char>>, Vec<Direction>) {
                 from_index,
                 to_index,
             });
+        }
+        let mut i = 0;
+        for chunk in line.chars().chunks(4).into_iter() {
+            i += 1;
+            let x: String = chunk.collect();
+            if x == "    " {
+                continue;
+            }
+            // TODO: add each chunk to the correct pile
         }
     }
 
