@@ -1,4 +1,4 @@
-#![warn(dead_code)]
+#![warn(dead_code, unused_variables)]
 
 pub mod one;
 pub mod two;
