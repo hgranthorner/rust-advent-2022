@@ -95,7 +95,7 @@ mod tests {
         for (sample, _, expected) in SAMPLES {
             assert_eq!(expected, solve_second(sample));
         }
-        assert_eq!(1134, solve_second(INPUT));
+        assert_eq!(2263, solve_second(INPUT));
     }
 }
 
