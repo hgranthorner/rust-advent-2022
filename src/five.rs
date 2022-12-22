@@ -64,7 +64,6 @@ pub fn solve_first(input: &str) -> String {
         process_direction(dir, &mut piles);
     }
 
-    println!("{:?}", piles);
     for mut pile in piles {
         result.push(pile.pop_front().unwrap());
     }
@@ -78,6 +77,33 @@ fn process_direction(dir: Direction, piles: &mut Vec<VecDeque<char>>) {
         let target = piles.get_mut(dir.to_index).unwrap();
         target.push_front(val);
     }
+}
+
+fn process_direction2(dir: Direction, piles: &mut Vec<VecDeque<char>>) {
+    let mut tmp: Vec<char> = vec![];
+    for _ in 0..dir.amount {
+        let val = piles.get_mut(dir.from_index).unwrap().pop_front().unwrap();
+        tmp.push(val);
+    }
+    let target = piles.get_mut(dir.to_index).unwrap();
+    tmp.reverse();
+    for c in tmp {
+        target.push_front(c);
+    }
+}
+
+pub fn solve_second(input: &str) -> String {
+    let mut result = String::new();
+    let (mut piles, dirs) = parse_input(input);
+    for dir in dirs {
+        process_direction2(dir, &mut piles);
+    }
+
+    for mut pile in piles {
+        result.push(pile.pop_front().unwrap());
+    }
+
+    result
 }
 
 #[cfg(test)]
@@ -106,19 +132,17 @@ mod tests {
     #[test]
     fn solves_first() {
         assert_eq!("CMZ", solve_first(SAMPLE));
-        assert_eq!("CMZ", solve_first(INPUT));
+        assert_eq!("ZSQVCCJLL", solve_first(INPUT));
     }
-    /*
 
     #[test]
     fn solves_second() {
-        assert_eq!(4, solve_second(SAMPLE));
-        assert_eq!(878, solve_second(INPUT));
+        assert_eq!("MCD", solve_second(SAMPLE));
+        assert_eq!("QZFJRWHGS", solve_second(INPUT));
     }
-    */
 }
 
-const INPUT: &str = "            [G] [W]         [Q]    
+pub const INPUT: &str = "            [G] [W]         [Q]    
 [Z]         [Q] [M]     [J] [F]    
 [V]         [V] [S] [F] [N] [R]    
 [T]         [F] [C] [H] [F] [W] [P]
