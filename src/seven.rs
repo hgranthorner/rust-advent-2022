@@ -35,6 +35,11 @@ pub enum Output {
     FSO(FSO),
 }
 
+pub struct Directory {
+    path: PathBuf,
+    size: u64,
+}
+
 impl From<&str> for Output {
     fn from(value: &str) -> Self {
         let mut splits = value.split(" ");
@@ -66,11 +71,11 @@ fn parse_input(input: &str) -> Vec<FSO> {
         match output {
             Output::Cmd { name, args } => {
                 if name == "cd" {
-                	if args.first().unwrap() == ".." {
-                		cwd = cwd.parent().unwrap().to_path_buf();
-                	} else {
-                    	cwd.push(args.first().unwrap());
-                	}
+                    if args.first().unwrap() == ".." {
+                        cwd = cwd.parent().unwrap().to_path_buf();
+                    } else {
+                        cwd.push(args.first().unwrap());
+                    }
                 }
             }
             Output::FSO(fso) => match fso {
@@ -94,6 +99,28 @@ fn parse_input(input: &str) -> Vec<FSO> {
     return fsos;
 }
 
+
+
+fn calculate_dir_sizes(fsos: Vec<FSO>) -> Vec<Directory> {
+	let mut dirs = vec![];
+	for x in fsos.iter() {
+        if let FSO::Dir { path: dir_path } = x {
+            let mut dir_total = 0;
+            for y in fsos.iter() {
+                if let FSO::File {
+                    path: file_path,
+                    size,
+                } = y
+                {
+                    if file_path.starts_with(dir_path) {
+                        dir_total += *size;
+                    }
+                }
+            }  qa 
+        }
+    }
+}
+
 fn solve_first(input: &str) -> u64 {
     let fsos = parse_input(input);
     let mut sum = 0;
@@ -106,12 +133,6 @@ fn solve_first(input: &str) -> u64 {
                     size,
                 } = y
                 {
-                    println!(
-                        "{} contains {}? {}",
-                        dir_path.display(),
-                        file_path.display(),
-                        file_path.starts_with(dir_path)
-                    );
                     if file_path.starts_with(dir_path) {
                         dir_total += *size;
                     }
