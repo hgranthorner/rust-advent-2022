@@ -35,6 +35,7 @@ pub enum Output {
     FSO(FSO),
 }
 
+#[derive(Debug)]
 pub struct Directory {
     path: PathBuf,
     size: u64,
@@ -63,8 +64,9 @@ impl From<&str> for Output {
 
 // TODO: Figure out how to work with trees in Rust
 fn parse_input(input: &str) -> Vec<FSO> {
-    let mut cwd = PathBuf::from("\\");
+    let mut cwd = PathBuf::from("/");
     let mut fsos = Vec::<FSO>::new();
+    fsos.push(FSO::Dir { path: PathBuf::from("/") });
     let mut lines = input.lines();
     lines.next();
     for output in lines.map(Output::from) {
@@ -99,31 +101,8 @@ fn parse_input(input: &str) -> Vec<FSO> {
     return fsos;
 }
 
-
-
 fn calculate_dir_sizes(fsos: Vec<FSO>) -> Vec<Directory> {
-	let mut dirs = vec![];
-	for x in fsos.iter() {
-        if let FSO::Dir { path: dir_path } = x {
-            let mut dir_total = 0;
-            for y in fsos.iter() {
-                if let FSO::File {
-                    path: file_path,
-                    size,
-                } = y
-                {
-                    if file_path.starts_with(dir_path) {
-                        dir_total += *size;
-                    }
-                }
-            }  qa 
-        }
-    }
-}
-
-fn solve_first(input: &str) -> u64 {
-    let fsos = parse_input(input);
-    let mut sum = 0;
+    let mut dirs = vec![];
     for x in fsos.iter() {
         if let FSO::Dir { path: dir_path } = x {
             let mut dir_total = 0;
@@ -138,14 +117,51 @@ fn solve_first(input: &str) -> u64 {
                     }
                 }
             }
+            dirs.push(Directory {
+                path: dir_path.to_path_buf(),
+                size: dir_total,
+            });
+        }
+    }
 
-            if dir_total < 100000 {
-                sum += dir_total;
-            }
+    dirs
+}
+
+fn solve_first(input: &str) -> u64 {
+    let fsos = parse_input(input);
+    let mut sum = 0;
+    let dirs = calculate_dir_sizes(fsos);
+    for dir in dirs {
+        if dir.size < 100000 {
+            sum += dir.size;
         }
     }
 
     sum
+}
+
+const TOTAL_SPACE: u64 = 70000000;
+const NEEDED_SPACE: u64 = 30000000;
+
+fn solve_second(input: &str) -> u64 {
+    let fsos = parse_input(input);
+    let dirs = calculate_dir_sizes(fsos);
+    let root_path = PathBuf::from("/");
+    let root = dirs.iter().find(|d| {
+        println!("{:?}", d);
+        d.path == root_path
+    }).unwrap();
+
+    let space_to_free = NEEDED_SPACE - (TOTAL_SPACE - root.size);
+
+    let smallest_space_freeable = dirs
+        .iter()
+        .filter(|d| d.size > space_to_free)
+        .map(|d| d.size)
+        .min()
+        .unwrap();
+
+    smallest_space_freeable
 }
 
 #[cfg(test)]
@@ -180,7 +196,7 @@ mod tests {
     fn test_parse() {
         let result = parse_input(SAMPLE);
         assert_eq!(
-            3,
+            4,
             result
                 .iter()
                 .filter(|f| matches!(f, FSO::Dir { path: _ }))
@@ -199,6 +215,12 @@ mod tests {
     fn test_solve_first() {
         assert_eq!(95437, solve_first(SAMPLE));
         assert_eq!(1915606, solve_first(INPUT));
+    }
+
+    #[test]
+    fn test_solve_second() {
+        assert_eq!(24933642, solve_second(SAMPLE));
+        assert_eq!(5025657, solve_second(INPUT));
     }
 }
 
