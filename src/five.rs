@@ -71,7 +71,7 @@ pub fn solve_first(input: &str) -> String {
     result
 }
 
-fn process_direction(dir: Direction, piles: &mut Vec<VecDeque<char>>) {
+fn process_direction(dir: Direction, piles: &mut [VecDeque<char>]) {
     for _ in 0..dir.amount {
         let val = piles.get_mut(dir.from_index).unwrap().pop_front().unwrap();
         let target = piles.get_mut(dir.to_index).unwrap();
@@ -79,7 +79,7 @@ fn process_direction(dir: Direction, piles: &mut Vec<VecDeque<char>>) {
     }
 }
 
-fn process_direction2(dir: Direction, piles: &mut Vec<VecDeque<char>>) {
+fn process_direction2(dir: Direction, piles: &mut [VecDeque<char>]) {
     let mut tmp: Vec<char> = vec![];
     for _ in 0..dir.amount {
         let val = piles.get_mut(dir.from_index).unwrap().pop_front().unwrap();
@@ -123,8 +123,8 @@ mod tests {
     fn test_process_direction() {
         let (mut piles, dirs) = parse_input(SAMPLE);
         process_direction(*dirs.first().unwrap(), &mut piles);
-        let first_pile = piles.first().unwrap().into_iter().collect_vec();
-        let second_pile = piles.get(1).unwrap().into_iter().collect_vec();
+        let first_pile = piles.first().unwrap().iter().collect_vec();
+        let second_pile = piles.get(1).unwrap().iter().collect_vec();
         assert_eq!(vec![&'D', &'N', &'Z'], first_pile);
         assert_eq!(vec![&'C', &'M'], second_pile);
     }

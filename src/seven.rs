@@ -43,10 +43,10 @@ pub struct Directory {
 
 impl From<&str> for Output {
     fn from(value: &str) -> Self {
-        let mut splits = value.split(" ");
-        let dir_or_size = splits.nth(0).unwrap();
-        let name = splits.nth(0).unwrap();
-        return match dir_or_size {
+        let mut splits = value.split(' ');
+        let dir_or_size = splits.next().unwrap();
+        let name = splits.next().unwrap();
+        match dir_or_size {
             "$" => Output::Cmd {
                 name: name.to_string(),
                 args: splits.map(str::to_string).collect(),
@@ -58,7 +58,7 @@ impl From<&str> for Output {
                 path: PathBuf::from(name),
                 size: dir_or_size.parse::<u64>().unwrap(),
             }),
-        };
+        }
     }
 }
 
@@ -98,7 +98,7 @@ fn parse_input(input: &str) -> Vec<FSO> {
         }
     }
 
-    return fsos;
+    fsos
 }
 
 fn calculate_dir_sizes(fsos: Vec<FSO>) -> Vec<Directory> {
