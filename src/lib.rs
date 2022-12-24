@@ -1,4 +1,5 @@
 #![allow(dead_code, unused_variables)]
+#![feature(anonymous_lifetime_in_impl_trait)]
 
 pub mod one;
 pub mod two;
