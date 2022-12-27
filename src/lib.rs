@@ -9,6 +9,7 @@ pub mod five;
 pub mod six;
 pub mod seven;
 pub mod eight;
+pub mod nine;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right

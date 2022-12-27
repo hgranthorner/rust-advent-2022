@@ -156,15 +156,15 @@ mod tests {
     fn test_solve_second() {
         let result = solve_second(SAMPLE);
         assert_eq!(8, result);
-        let result = solve_second(INPUT);
-        assert_eq!(368368, result);
+        // let result = solve_second(INPUT);
+        // assert_eq!(368368, result);
     }
-    
-    #[test]
-    fn test_slow() {
-        let result = solve_second(INPUT);
-        assert_eq!(368368, result);
-    }
+
+    // #[test]
+    // fn test_slow() {
+    //     let result = solve_second(INPUT);
+    //     assert_eq!(368368, result);
+    // }
 }
 
 pub const INPUT: &str = "200200221023111313131033314121142013103432145142351212334232423210101340410243413011333312111010010
